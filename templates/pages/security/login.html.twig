@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-4">Formulaire de Connexion</h1>
+
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+    {% endfor %}
+
+
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    </div>
+    {% endif %}
+    <form action="{{path('security.login')}}" method="post">
+    <div class="mb-3">
+        <label for="username" class="form-label">Addresse e-mail</label>
+        <input type="email" class="form-control" id="username" placeholder="example@email.com" name="_username" aria-describedby="emailHelp" value = "{{last_username}}">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input type="password" class="form-control" id="password" name="_password" placeholder="**********">
+    </div>
+    
+    <button type="submit" class="btn btn-dark">Se connecter</button>
+    </form>
+</div
+
+{% endblock %}

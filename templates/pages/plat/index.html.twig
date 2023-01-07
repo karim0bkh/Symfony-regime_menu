@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Plat{% endblock %}
+
+{% block body %}
+<div class='container mt-4'>
+{% if not plats.items is same as([]) %}
+    <h1>Mes Plats </h1>
+
+    <a href= "{{path('new_plat')}}"    class="btn btn-dark">
+      Créer un plat
+    </a>
+
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+    {% endfor %}
+<div class="count mt-4 mb-2">
+<h4>
+   Il y a 
+   <span class="badge bg-danger">{{ plats.getTotalItemCount }} </span>
+   plats au total.
+   </h4>
+   <br>
+</div>
+
+
+<table class="table table-bordered table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">#ID</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Cout</th>
+      <th scope="col">Calories</th>
+      <th scope="col">Ingredients</th>
+      <th scope="col">Edition</th>
+      <th scope="col">Suppresion</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  {% for plat in plats %}
+        <tr>
+      <th scope="row" >{{ plat.id }}</th>
+      <td>{{ plat.nomPlat }}</td>
+      <td>{{ plat.cout }}</td>
+      <td>{{ plat.nbrCalories }}</td>
+      <td>{{ plat.ingredients }}</td>
+      <td>
+        <a href= "{{path('plat.edit',{id:plat.id})}}" class="btn btn-success">
+          Edition
+        </a>
+      </td>
+      <td>
+        <a href= "{{path('plat.delete',{id:plat.id})}}" class="btn btn-danger" onclick="return confirm('êtes-vous sûr de vouloir supprimer ce plat?')">
+          Suppresion
+        </a>
+      </td>
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<div class="pagination-bg-red  d-flex justify-content-center ">
+    {{ knp_pagination_render(plats) }}
+</div>
+{% else %}
+    <h4>Il n'y a pas des plats</h4>
+        <a href= "{{path('new_plat')}}"    class="btn btn-dark">
+      Créer un plat
+    </a>
+
+{% endif %}
+</div>
+{% endblock %}

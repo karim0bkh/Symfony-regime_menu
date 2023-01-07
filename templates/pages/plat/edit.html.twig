@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class = "container">
+    
+    <h1 class = "mt-4">Modification d'un plat</h1>
+        
+        {{ form_start(form) }}
+
+            <div class="form_group ">
+                {{ form_label(form.nomPlat) }}
+                {{ form_widget(form.nomPlat) }}
+                    <div class="form-error">
+                        {{ form_errors(form.nomPlat) }}
+                    </div>
+            </div>
+            <div class="form_group">
+                {{ form_label(form.cout) }}
+                {{ form_widget(form.cout) }}
+                    <div class="form-error">
+                        {{ form_errors(form.cout) }}
+                    </div>
+            </div>
+            <div class="form_group">
+                {{ form_label(form.nbrCalories) }}
+                {{ form_widget(form.nbrCalories) }}
+                    <div class="form-error">
+                        {{ form_errors(form.nbrCalories) }}
+                    </div>
+            </div>
+            <div class="form_group">
+                {{ form_label(form.ingredients) }}
+                {{ form_widget(form.ingredients) }}
+                    <div class="form-error">
+                        {{ form_errors(form.ingredients) }}
+                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_row(form.submit) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,28 +1,51 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">PROJET SF</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarColor02">
+    <div class="collapse navbar-collapse" id="navbarColor02" style="margin-left:2rem;">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Home
+          <a class="nav-link active" href="/">Accueil
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
+        {% if app.user %}
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="{{path('app_plat')}}">Mes Plats</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="{{path('app_regime')}}">Mes Regimes</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('security.signup')}}">Inscription</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" href="{{path('security.login')}}">Connexion</a>
         </li>
-        
+
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('regime.public')}}">Régimes publique</a>
+        </li>
       </ul>
+      {% if app.user %}
+      <div class="d-flex">
+        <div class="dropdown" style="margin-right : 3rem;">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            {{app.user.nomPrenom}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="{{path('user.edit',{id:app.user.id})}}">Modifier Profile</a></li>
+            <li><a class="dropdown-item" href="{{path('security.logout')}}">Deconnexion</a></li>
+          </ul>
+        </div>
+      </div>
       
+      {% endif %}
     </div>
   </div>
 </nav>

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Création Régime
+{% endblock %}
+{% block body %}
+    <div class = "container">
+    
+    <h1 class = "mt-4">Création d'un régime</h1>
+        {{ form_start(form) }}
+            <div class="form_group">
+                {{ form_label(form.nomRegime) }}
+                {{ form_widget(form.nomRegime) }}
+                    <div class="form-error">
+                        {{ form_errors(form.nomRegime) }}
+                    </div>
+            </div>
+            <div class="form_group">
+                {{ form_label(form.duree) }}
+                {{ form_widget(form.duree) }}
+                <output>25</output>
+
+                    <div class="form-error">
+                        {{ form_errors(form.duree) }}
+                    </div>
+            </div>
+            <div class="form_group">
+                {{ form_label(form.type) }}
+                {{ form_widget(form.type) }}
+                    <div class="form-error">
+                        {{ form_errors(form.type) }}
+                    </div>
+            </div>
+            <div class="form_group">
+                {{ form_label(form.isFavorite) }}
+                {{ form_widget(form.isFavorite) }}
+                    <div class="form-error">
+                        {{ form_errors(form.isFavorite) }}
+                    </div>
+            </div>
+                    
+
+
+        {{ form_label(form.menu) }}
+		<br>
+		<div>
+			{% for field in form.menu %}
+				<div style="min-width: 10%;">
+					{{ form_widget(field) }}
+					{{ form_label(field) }}
+				</div>
+			{% endfor %}
+		</div>
+
+
+         <div >
+            {{ form_row(form.imageFile) }}
+        </div>      
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

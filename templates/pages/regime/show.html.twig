@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Régimes - Publique
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+    {% endfor %}
+        <h1 class="mt-4">{{regime.nomRegime}}</h1>
+
+        <div>
+            <img class="img-thumbnail" style="max-width:400px;" src="{{ vich_uploader_asset(regime,'imageFile') }}">
+        </div>
+
+		<span class="badge bg-danger">La moyenne de cet régime est : {{ regime.moy_note|number_format('2', '.', ',')}}/10</span>
+
+        <p>Durée (En semaines) : {{regime.duree}}</p>
+        <p>Type : {{regime.type}}</p>
+        <span class="badge bg-primary">Date de création : {{regime.createdAt|date('d/m/y')}}</span>
+        <div class="mt-4">
+			<p class="mt-4">Les Plats : </p>
+			{% for plat in regime.menu %}
+				<span class="badge bg-success">{{ plat.nomPlat }}</span>
+			{% endfor %}
+		</div>
+        <div>
+        {{form(form)}}
+        </div>
+
+    </div>
+{% endblock %}

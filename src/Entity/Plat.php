@@ -3,10 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\PlatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints As Assert;
 
 #[ORM\Entity(repositoryClass: PlatRepository::class)]
+#[UniqueEntity('nomPlat')]
 class Plat
 {
     #[ORM\Id]
@@ -33,6 +37,18 @@ class Plat
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:10,max:250)]
     private ?string $ingredients = null;
+
+    #[ORM\ManyToMany(targetEntity: Regime::class, mappedBy: 'menu')]
+    private Collection $regimes;
+
+    #[ORM\ManyToOne(inversedBy: 'plats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    public function __construct()
+    {
+        $this->regimes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,6 +99,49 @@ class Plat
     public function setIngredients(string $ingredients): self
     {
         $this->ingredients = $ingredients;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Regime>
+     */
+    public function getRegimes(): Collection
+    {
+        return $this->regimes;
+    }
+
+    public function addRegime(Regime $regime): self
+    {
+        if (!$this->regimes->contains($regime)) {
+            $this->regimes->add($regime);
+            $regime->addMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegime(Regime $regime): self
+    {
+        if ($this->regimes->removeElement($regime)) {
+            $regime->removeMenu($this);
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->nomPlat;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

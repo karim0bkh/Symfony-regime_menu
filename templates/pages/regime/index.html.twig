@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Régime{% endblock %}
+
+{% block body %}
+<div class='container mt-4'>
+{% if not regimes.items is same as([]) %}
+    <h1>Mes Régimes </h1>
+
+        <a href= "{{path('regime.new')}}"    class="btn btn-dark">
+      Créer un régime
+    </a>
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4">
+                {{ message }}
+            </div>
+    {% endfor %}
+
+<div class="count mt-4 mb-2">
+<h4>
+   Il y a 
+   <span class="badge bg-danger">{{ regimes.getTotalItemCount }} </span>
+   régimes au total.
+   </h4>
+   <br>
+</div>
+
+
+<table class="table table-bordered table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">#ID</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Type</th>
+      <th scope="col">duree</th>
+      <th scope="col">Date de Création</th>
+      <th scope="col">Edition</th>
+      <th scope="col">Suppresion</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  {% for regime in regimes %}
+        <tr>
+      <th scope="row" >{{ regime.id }}</th>
+      <td>{{ regime.nomRegime }}</td>
+      <td>{{ regime.type }}</td>
+      <td>{{ regime.duree }}</td>
+      <td>{{regime.createdAt|date('d/m/y')}}</td>
+      <td>
+        <a href= "{{path('regime.edit',{id:regime.id})}}" class="btn btn-success">
+          Edition
+        </a>
+      </td>
+      <td>
+        <a href= "{{path('regime.delete',{id:regime.id})}}" class="btn btn-danger" onclick="return confirm('êtes-vous sûr de vouloir supprimer ce plat?')">
+          Suppresion
+        </a>
+      </td>
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
+<div class="pagination-bg-red  d-flex justify-content-center ">
+    {{ knp_pagination_render(regimes) }}
+</div>
+{% else %}
+    <h4>Il n'y a pas des régimes</h4>
+        <a href= "{{path('regime.new')}}"    class="btn btn-dark">
+      Créer un régime
+    </a>
+{% endif %}
+</div>
+{% endblock %}
